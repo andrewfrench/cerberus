@@ -34,7 +34,7 @@ class Cerberus(object):
 
 	def initialize_mqtt_client(self):
 		print("Initializing MQTT Client.")
-		self.Client = mqtt.Client()
+		self.Client = mqtt.Client("2lemetry Door Lock")
 		self.Client.on_connect = self.on_connect
 		self.Client.on_disconnect = self.on_disconnect
 		self.Client.on_subscribe = self.on_subscribe
@@ -104,11 +104,13 @@ class Cerberus(object):
 
 		# Use Pi's 3.3V GPIO to switch the 24V MOSFET on. (0V -> 3.3V)
 		GPIO.output(18, True)
+		# If ground is 3 pins in, this is 6 pins past ground.
 
 	def unlock_door(self):
 		print("Unlocking door.")
 
 		# Use Pi's 3.3V GPIO to switch the 24V MOSFET off. (3.3V -> 0V)
 		GPIO.output(18, False)
+		# If ground is 3 pins in, this is 6 pins past ground.
 
 cerberus = Cerberus()
