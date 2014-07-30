@@ -40,7 +40,7 @@ class Cerberus(object):
 		self.Client.connect(self.thingfabric_info["url"], self.thingfabric_info["port"], self.thingfabric_info["keepalive"])
 		self.Client.loop_forever()
 
-	def on_connect(self, userdata, flags, rc):
+	def on_connect(self, client, userdata, flags, rc):
 		if rc != 0:
 			print("MQTT Client connection returned RC " + str(rc))
 		else: 
@@ -62,13 +62,13 @@ class Cerberus(object):
 		print("Message received.")
 		self.parse_mqtt(message.payload)
 
-	def parse_mqtt(self, mqtt_message):
+	def parse_mqtt(self, mqtt_payload):
 
 		# look at MQTT message and decide what to do
 		try:
-			parsed_json = json.loads(mqtt_message)
+			parsed_json = json.loads(mqtt_payload)
 		except ValueError:
-			print(mqtt_message)
+			print(mqtt_payload)
 
 		# Assume two fields:
 		# Command:  lock/unlock
