@@ -6,6 +6,7 @@
 # Send unlock confirmation back via MQTT
 
 import paho.mqtt.client as mqtt
+import RPi.GPIO as GPIO
 import json
 import time
 import hashlib
@@ -14,6 +15,8 @@ class Cerberus(object):
 	def __init__(self):
 		# initialize the class that controls the brains of the lock
 		print("initializing Cerberus.")
+		GPIO.setup(18, GPIO.OUT)
+		GPIO.output(18, False)
 		self.reconnect_wait_time = 1
 		self.secret_key = hashlib.md5("super secret door key").hexdigest()
 		print("secret key: " + self.secret_key)
@@ -100,14 +103,12 @@ class Cerberus(object):
 		print("Locking door.")
 
 		# Use Pi's 3.3V GPIO to switch the 24V MOSFET on. (0V -> 3.3V)
-
-		pass
+		GPIO.output(18, True)
 
 	def unlock_door(self):
 		print("Unlocking door.")
 
 		# Use Pi's 3.3V GPIO to switch the 24V MOSFET off. (3.3V -> 0V)
-
-		pass
+		GPIO.output(18, False)
 
 cerberus = Cerberus()
