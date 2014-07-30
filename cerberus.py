@@ -65,10 +65,8 @@ class Cerberus(object):
 	def parse_mqtt(self, mqtt_payload):
 
 		# look at MQTT message and decide what to do
-		try:
-			parsed_json = json.loads(mqtt_payload)
-		except ValueError:
-			print(mqtt_payload)
+		parsed_json = json.loads(mqtt_payload)
+
 
 		# Assume two fields:
 		# Command:  lock/unlock
